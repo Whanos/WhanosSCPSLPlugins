@@ -20,6 +20,13 @@ namespace CookedGrenadesKill
         private static MainPlugin _singleton = new MainPlugin();
         // what?
         
+        //creator stuff
+        public override string Author { get; } = "Whanos | Whanos#0621 | @WhanosSergal";
+        public override string Name { get; } = "CookedGrenadesKill";
+        public override string Prefix { get; } = "CGK";
+        public override Version Version { get; } = new Version(1, 1, 0);
+        //end of that
+        
         public override PluginPriority Priority { get; } = PluginPriority.Medium;
 
         private MainPlugin()
@@ -38,7 +45,7 @@ namespace CookedGrenadesKill
 
         public override void OnDisabled()
         {
-            
+            UnregisterEvents();
         }
 
         private void RegisterEvents()
@@ -48,6 +55,12 @@ namespace CookedGrenadesKill
 
             Player.Dying += player.OnDying;
             Map.ExplodingGrenade += map.OnExplodingGrenade;
+        }
+        
+        private void UnregisterEvents()
+        {
+            Player.Dying -= player.OnDying;
+            Map.ExplodingGrenade -= map.OnExplodingGrenade;
         }
     }
 }

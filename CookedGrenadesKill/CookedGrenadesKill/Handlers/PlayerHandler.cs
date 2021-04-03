@@ -12,6 +12,7 @@ namespace CookedGrenadesKill.Handlers
     {
         public static List<GameObject> CGKGrenades = new List<GameObject>();
 
+        private readonly MainPlugin plugin;
         public void OnDying(DyingEventArgs ev)
         {
             var currentItem = ev.Target.Inventory.curItem;
@@ -23,7 +24,7 @@ namespace CookedGrenadesKill.Handlers
                     case ItemType.GrenadeFrag:
                         Grenade grenade = Object.Instantiate(ev.Target.GrenadeManager.availableGrenades[0].grenadeInstance)
                             .GetComponent<Grenade>();
-                        grenade.fuseDuration = 1.5f;
+                        grenade.fuseDuration = plugin.Config.FuseTime;
                         grenade.InitData(ev.Target.ReferenceHub.GetComponent<GrenadeManager>(), Vector3.zero, Vector3.zero, 0);
                         CGKGrenades.Add(grenade.gameObject); //add grenade object to list to save and do stuff wit later
                         NetworkServer.Spawn(grenade.gameObject); //actually spawn the grenade
