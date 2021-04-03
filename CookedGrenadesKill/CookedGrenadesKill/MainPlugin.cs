@@ -9,6 +9,8 @@ using Exiled.Events.Extensions;
 
 using Server = Exiled.Events.Handlers.Server;
 using Player = Exiled.Events.Handlers.Player;
+using Map = Exiled.Events.Handlers.Map;
+
 
 namespace CookedGrenadesKill
 {
@@ -28,7 +30,7 @@ namespace CookedGrenadesKill
         public static MainPlugin Instance => _singleton;
 
         private Handlers.PlayerHandler player;
-        private Handlers.Server server;
+        private Handlers.MapHandler map;
         public override void OnEnabled()
         {
             RegisterEvents();
@@ -42,9 +44,10 @@ namespace CookedGrenadesKill
         private void RegisterEvents()
         {
             player = new Handlers.PlayerHandler();
-            server = new Handlers.Server();
+            map = new Handlers.MapHandler();
 
             Player.Dying += player.OnDying;
+            Map.ExplodingGrenade += map.OnExplodingGrenade;
         }
     }
 }

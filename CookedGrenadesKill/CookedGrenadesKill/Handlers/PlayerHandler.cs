@@ -1,4 +1,5 @@
-﻿using Exiled.API.Features;
+﻿using System.Collections.Generic;
+using Exiled.API.Features;
 using Exiled.Events.EventArgs;
 using Exiled;
 using Grenades;
@@ -9,11 +10,13 @@ namespace CookedGrenadesKill.Handlers
 {
     class PlayerHandler
     {
+        public static List<GameObject> CGKGrenades = new List<GameObject>();
+
         public void OnDying(DyingEventArgs ev)
         {
             var currentItem = ev.Target.Inventory.curItem;
             if (currentItem == ItemType.GrenadeFlash || currentItem == ItemType.GrenadeFrag ||
-                currentItem == ItemType.SCP018)
+                currentItem == ItemType.SCP018) //check is grenade
             {
                 switch (currentItem)
                 {
@@ -22,9 +25,14 @@ namespace CookedGrenadesKill.Handlers
                             .GetComponent<Grenade>();
                         grenade.fuseDuration = 1.5f;
                         grenade.InitData(ev.Target.ReferenceHub.GetComponent<GrenadeManager>(), Vector3.zero, Vector3.zero, 0);
-                        NetworkServer.Spawn(grenade.gameObject);
+                        CGKGrenades.Add(grenade.gameObject); //add grenade object to list to save and do stuff wit later
+                        NetworkServer.Spawn(grenade.gameObject); //actually spawn the grenade
                         break;
                     case ItemType.GrenadeFlash:
+                        //TODO - Figure out this ^
+                        break;
+                    case ItemType.SCP018:
+                        //TODO - This ^
                         break;
                 }
             }

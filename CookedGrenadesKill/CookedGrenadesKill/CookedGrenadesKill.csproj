@@ -237,8 +237,8 @@
     </ItemGroup>
     <ItemGroup>
         <Compile Include="Config.cs" />
+        <Compile Include="Handlers\MapHandler.cs" />
         <Compile Include="Handlers\PlayerHandler.cs" />
-        <Compile Include="Handlers\Server.cs" />
         <Compile Include="MainPlugin.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
     </ItemGroup>
