@@ -1,30 +1,29 @@
 ﻿using System;
-using Exiled.API.Features;
-using Exiled.API.Enums;
+using System.Collections.Generic;
 using Exiled.Events.Handlers;
 using Exiled;
+using Exiled.API.Enums;
+using Exiled.API.Features;
 using Exiled.Events;
 using Exiled.Events.EventArgs;
 using Exiled.Events.Extensions;
 
-using Server = Exiled.Events.Handlers.Server;
-using Player = Exiled.Events.Handlers.Player;
 using Map = Exiled.Events.Handlers.Map;
+using Player = Exiled.Events.Handlers.Player;
 
-
-namespace CookedGrenadesKill
+namespace ThrowableMitosis
 {
     public class MainPlugin : Plugin<Config>
     {
-
         private static MainPlugin _singleton = new MainPlugin();
-        // what?
+
+        //public static Dictionary<Player, string> dict = new Dictionary<Player, string>(); 
         
         //creator stuff
         public override string Author { get; } = "Whanos | Whanos#0621 | @WhanosSergal";
-        public override string Name { get; } = "CookedGrenadesKill";
-        public override string Prefix { get; } = "CGK";
-        public override Version Version { get; } = new Version(1, 2, 0);
+        public override string Name { get; } = "ThrowableMitosis";
+        public override string Prefix { get; } = "TM";
+        public override Version Version { get; } = new Version(1, 0, 0);
         //end of that
         
         public override PluginPriority Priority { get; } = PluginPriority.Medium;
@@ -33,10 +32,10 @@ namespace CookedGrenadesKill
         {
             
         }
-
+        //it just needs to be here. don't ask
+        
         public static MainPlugin Instance => _singleton;
 
-        private Handlers.PlayerHandler player;
         private Handlers.MapHandler map;
         public override void OnEnabled()
         {
@@ -50,16 +49,14 @@ namespace CookedGrenadesKill
 
         private void RegisterEvents()
         {
-            player = new Handlers.PlayerHandler();
             map = new Handlers.MapHandler();
 
-            Player.Dying += player.OnDying;
             Map.ExplodingGrenade += map.OnExplodingGrenade;
+            Player.ThrowingGrenade += map.OnGrenadeUse;
         }
         
         private void UnregisterEvents()
         {
-            Player.Dying -= player.OnDying;
             Map.ExplodingGrenade -= map.OnExplodingGrenade;
         }
     }
